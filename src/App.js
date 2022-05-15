@@ -8,7 +8,12 @@ import Login from './Pages/Login/Login';
 import Appointment from './Pages/Appointment/Appointment';
 import Signup from './Pages/Login/Signup';
 import RequireAuth from './Pages/Login/RequireAuth';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Dashboard from './Pages/Dashboard/Dashboard';
+import MyAppoinments from './Pages/Dashboard/MyAppoinments';
+import MyReview from './Pages/Dashboard/MyReview';
+import MyHistory from './Pages/Dashboard/MyHistory';
 function App() {
   return (
     <div className='max-w-7xl mx-auto px-12' >
@@ -19,10 +24,19 @@ function App() {
         <Route path='/appointment' element={<RequireAuth>
           <Appointment></Appointment>
         </RequireAuth>}></Route>
+        <Route path='dashboard' element={<RequireAuth>
+          <Dashboard></Dashboard>
+        </RequireAuth>}>
+          <Route index element={<MyAppoinments></MyAppoinments>}></Route>
+          <Route path='myreview' element={<MyReview></MyReview>}></Route>
+          <Route path='history' element={<MyHistory></MyHistory>}></Route>
+
+        </Route>
         <Route path='/about' element={<About></About>}></Route>
         <Route path='/login' element={<Login></Login>}></Route>
         <Route path='/signUp' element={<Signup></Signup>}></Route>
       </Routes>
+      <ToastContainer />
     </div>
   );
 }
