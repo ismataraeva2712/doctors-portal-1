@@ -5,6 +5,7 @@ import { useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-fireba
 import auth from '../../.firebase.init';
 import Loading from '../Shared/Loading';
 import { Link, useLocation, Navigate, useNavigate } from 'react-router-dom';
+import useToken from './../../hooks/useToken';
 const Login = () => {
     const [signInWithGoogle, user2, loading2, error2] = useSignInWithGoogle(auth);
     const [
@@ -17,12 +18,14 @@ const Login = () => {
     const navigate = useNavigate()
     let location = useLocation();
     let from = location.state?.from?.pathname || "/";
+    const [token] = useToken(user || user2)
+    console.log(token)
     useEffect(() => {
-        if (user || user2) {
+        if (token) {
             console.log(user || user2)
             navigate(from, { replace: true });
         }
-    }, [user, user2, from, navigate])
+    }, [token, from, navigate])
     if (loading || loading2) {
         return <Loading></Loading>
     }
